@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const proxy = require('express-http-proxy');
 const API = require('./api-routes');
 
-const db = require('../config/db');
+const db = require('./db');
 
 mongoose.connect(db.url);
 
@@ -21,15 +21,14 @@ app.use(morgan('tiny', {
       res.statusCode === 200 || !req.url.match('/aso/')
 }));
 
-// Send api/* to the backend
+// BACKEND
 app.use('/api', API);
 
-// Send the other request to angular cli
+// FRONT - Send other requests to angular cli
 app.use('/', proxy('localhost', {
   forwardPath: (req) => require('url').parse(req.url).path,
   port: angularCliPort
 }));
-
 
 app.listen(port, () =>
   winston.info('Magic happens on port ' + port)
