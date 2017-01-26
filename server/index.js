@@ -4,13 +4,10 @@ const app = express();
 const winston = require('winston');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const proxy = require('express-http-proxy');
 const API = require('./api-routes');
 
 const db = require('./db');
-
-mongoose.connect(db.url);
 
 const angularCliPort = 4200;
 const port = process.env.PORT || 3001;

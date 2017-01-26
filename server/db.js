@@ -1,25 +1,17 @@
 const mongoose = require('mongoose');
 const config = require('../config/db');
 
-const entities = ['profile', 'user'];
-
+const entities = ['Profile', 'User'];
 // Set promises to q
 mongoose.Promise = require('q').Promise;
 
-// require('./models/Users');
-// let db = {
-	// Warehouse : mongoose.model('Warehouse'),
-  // Warehouse : mongoose.model('Warehouse'),
-  // Warehouse : mongoose.model('Warehouse'),
-  // Warehouse : mongoose.model('Warehouse')
-// };
-
-const db = entities.recduce((acc, entity) => {
-  acc[entity] = mongoose.model(require(`./models/${entity}`));
+const db = entities.reduce((acc, entity) => {
+  require(`./models/${entity}`);
+  acc[entity] = mongoose.model(entity);
   return acc;
 }, {});
 
-console.log('Connection to mongodb://' + config.url);
-mongoose.connect('mongodb://' + connection_string);
+mongoose.connect(config.url).then(() =>
+  console.log('Connected to ' + config.url));
 
 module.exports = db;
