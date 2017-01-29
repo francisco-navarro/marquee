@@ -1,7 +1,7 @@
+const ensureAuthorized = require('./ensureAuthorized');
 let router = require('express').Router();
-let methodOverride = require('method-override');
 
-router.get('/*', function(req, res) {
+router.get('/*', ensureAuthorized, function(req, res) {
   return res.status(200).json({  a: 1  });
 });
 
