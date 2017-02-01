@@ -11,7 +11,7 @@
     if (!req.body.username || !req.body.password) {
       return res.status(400).json({ message: 'Please fill out all fields' });
     }
-    passport.authenticate('local', 
+    passport.authenticate('local',
       { failureRedirect: '/login' },
       (req, res) => {
         // if username and password correct 
